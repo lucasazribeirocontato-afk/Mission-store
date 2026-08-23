@@ -115,3 +115,7 @@ export default async (req) => {
     return resposta(500, { error: "Não foi possível salvar o produto." });
   }
 };
+
+export const config = {
+  path: "/api/admin/produtos",
+};
