@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[dev]
+  command = "npm run dev"
+  port = 8888
+  targetPort = 5173
+
+# Necessário para que /admin (e qualquer outra rota do lado do cliente)
+# funcione ao acessar direto pela URL ou dar refresh, sem afetar /api/*,
+# que continua roteado para as Netlify Functions normalmente.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
