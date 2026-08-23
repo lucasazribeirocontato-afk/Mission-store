@@ -1,0 +1,382 @@
+.admin-app {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--texto);
+  font-family: var(--font-body);
+}
+
+/* ============================================================
+   LOGIN
+============================================================ */
+
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+}
+
+.admin-login-icone {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--linha);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 4px;
+  color: var(--carimbo);
+}
+
+.admin-login-card h1 {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  font-size: 1.6rem;
+  margin: 0 0 4px;
+}
+
+.admin-login-card label {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--texto-fraco);
+}
+
+.admin-login-card input {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--linha);
+  background: var(--card);
+  color: var(--texto);
+}
+
+/* ============================================================
+   PAINEL
+============================================================ */
+
+.admin-panel {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+.admin-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-header h1 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  margin: 2px 0 0;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--linha);
+  margin-bottom: 22px;
+}
+
+.admin-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--texto-fraco);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.admin-tab-ativa {
+  color: var(--texto);
+  border-bottom-color: var(--carimbo);
+}
+
+.admin-secao-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.admin-secao-topo h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.admin-vazio {
+  color: var(--texto-fraco);
+  padding: 20px 0;
+}
+
+.admin-erro {
+  background: rgba(201, 113, 87, 0.14);
+  border: 1px solid var(--carimbo);
+  color: var(--carimbo);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+   TABELA
+============================================================ */
+
+.admin-tabela-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+}
+
+.admin-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-tabela th,
+.admin-tabela td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--linha);
+  white-space: nowrap;
+}
+
+.admin-tabela th {
+  color: var(--texto-fraco);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--surface);
+}
+
+.admin-tabela tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-linha-inativa {
+  opacity: 0.55;
+}
+
+.admin-estoque-zero {
+  color: var(--carimbo);
+  font-weight: 600;
+}
+
+.admin-acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-acoes button {
+  background: transparent;
+  border: 1px solid var(--linha);
+  border-radius: 6px;
+  padding: 6px;
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.admin-acoes button:hover {
+  border-color: var(--carimbo);
+  color: var(--carimbo);
+}
+
+.admin-tabela select {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--linha);
+  background: var(--card);
+  color: var(--texto);
+}
+
+.admin-linha-detalhes td {
+  background: var(--surface);
+  white-space: normal;
+}
+
+.admin-itens-pedido {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--texto-fraco);
+}
+
+/* ============================================================
+   MODAL DE PRODUTO
+============================================================ */
+
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.admin-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-modal-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.admin-modal-header button {
+  background: transparent;
+  border: none;
+  color: var(--texto-fraco);
+  cursor: pointer;
+}
+
+.admin-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-modal-full {
+  grid-column: 1 / -1;
+}
+
+.admin-modal-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--texto-fraco);
+}
+
+.admin-modal-grid input,
+.admin-modal-grid select {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 9px 11px;
+  border-radius: 8px;
+  border: 1px solid var(--linha);
+  background: var(--card);
+  color: var(--texto);
+}
+
+.admin-checkbox {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+}
+
+.admin-checkbox input {
+  width: auto;
+}
+
+.admin-modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 560px) {
+  .admin-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header {
+    flex-direction: column;
+  }
+}
+
+.admin-estoque-detalhe {
+  display: block;
+  margin-top: 3px;
+  color: var(--texto-fraco);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+.admin-estoque-tamanhos {
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  padding: 14px;
+  background: var(--card);
+}
+.admin-campo-titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 12px;
+}
+.admin-campo-titulo span { color: var(--texto); font-weight: 600; }
+.admin-campo-titulo small { color: var(--texto-fraco); }
+.admin-estoque-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+}
+.admin-estoque-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--texto-fraco);
+  font-size: .8rem;
+}
+.admin-estoque-item input { width: 100%; box-sizing: border-box; }
+.admin-estoque-total { margin: 12px 0 0; color: var(--texto-fraco); }
+.admin-estoque-total strong { color: var(--texto); }
+
+
+.admin-pagamento-status { text-transform: capitalize; font-weight: 700; }
