@@ -21,6 +21,8 @@ function Header({
           <a href="#produtos">Produtos</a>
           <a href="#categorias-home">Categorias</a>
           <a href="#missao">Sobre nós</a>
+          <a href="#entrega">Entrega</a>
+          <a href="#rastrear">Pedido</a>
           <a href="#contato">Contato</a>
         </nav>
 

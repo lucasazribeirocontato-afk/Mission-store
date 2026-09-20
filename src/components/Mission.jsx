@@ -29,7 +29,7 @@ function Mission() {
           <div><span>01</span><strong>FEITO COM PROPÓSITO</strong><small>Peças que carregam uma mensagem.</small></div>
           <div><span>02</span><strong>ESTILO URBANO</strong><small>Identidade sem abrir mão do conforto.</small></div>
           <div><span>03</span><strong>COMPRA SEGURA</strong><small>Atendimento direto e transparente.</small></div>
-          <div><span>04</span><strong>PARA TODO O BRASIL</strong><small>Leve a missão para onde você estiver.</small></div>
+          <div><span>04</span><strong>RS + SC</strong><small>Enviamos para todo o Rio Grande do Sul e Santa Catarina.</small></div>
         </div>
       </div>
     </section>

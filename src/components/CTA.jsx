@@ -2,7 +2,7 @@ import { LOJA } from "../config/loja";
 
 function CTA() {
   return (
-    <section className="cta">
+    <section id="contato" className="cta">
       <div className="container cta-inner">
         <p className="eyebrow">Faça parte da missão</p>
 
