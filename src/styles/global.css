@@ -1990,3 +1990,326 @@ body {
   cursor: not-allowed;
   text-decoration: line-through;
 }
+
+
+/* ==========================================================
+   MISSION STORE V2 — ENTREGA / PEDIDOS / COMO COMPRAR
+========================================================== */
+
+.delivery {
+  background: var(--surface);
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+}
+
+.delivery-head,
+.section-heading-inline {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 28px;
+}
+
+.delivery-head > p,
+.section-heading-inline > span {
+  max-width: 450px;
+  color: var(--texto-fraco);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.delivery-grid,
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.delivery-grid article,
+.how-grid article {
+  padding: 26px;
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+}
+
+.delivery-grid svg,
+.how-grid svg {
+  color: var(--azul);
+  margin-bottom: 18px;
+}
+
+.delivery-grid strong {
+  display: block;
+  color: var(--texto);
+  font-family: var(--font-stamp);
+  letter-spacing: 1px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.delivery-grid span {
+  display: block;
+  color: var(--texto-fraco);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.low-stock-section {
+  padding-top: 25px;
+}
+
+.low-stock-section .section-heading-inline {
+  margin-bottom: 25px;
+}
+
+.low-stock-section .section-heading-inline > span {
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.how {
+  background: var(--bg);
+}
+
+.how-grid {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 28px;
+}
+
+.how-grid article {
+  position: relative;
+  min-height: 210px;
+}
+
+.how-number {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--azul);
+  font-family: var(--font-display);
+  font-size: 30px;
+  opacity: .55;
+}
+
+.how-grid h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+.how-grid p {
+  margin: 0;
+  color: var(--texto-fraco);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.tracking {
+  background: var(--surface);
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+}
+
+.tracking-grid {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  align-items: center;
+  gap: clamp(30px, 6vw, 80px);
+}
+
+.tracking-intro {
+  max-width: 480px;
+  margin: 18px 0;
+  color: var(--texto-fraco);
+  line-height: 1.7;
+}
+
+.tracking-code-example {
+  display: inline-block;
+  padding: 9px 12px;
+  border: 1px dashed var(--linha);
+  border-radius: 6px;
+  color: var(--texto-fraco);
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: .7px;
+}
+
+.tracking-card {
+  padding: 26px;
+  border: 1px solid var(--linha);
+  border-radius: 16px;
+  background: var(--card);
+}
+
+.tracking-card form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tracking-card label,
+.checkout-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.tracking-card label span {
+  color: var(--texto);
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+
+.tracking-card input {
+  min-height: 46px;
+  border: 1px solid var(--linha);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--texto);
+  padding: 0 13px;
+  outline: none;
+}
+
+.tracking-card input:focus {
+  border-color: var(--azul);
+}
+
+.tracking-card form > button {
+  grid-column: 1 / -1;
+  justify-content: center;
+}
+
+.tracking-erro {
+  margin-top: 15px;
+  padding: 12px 14px;
+  border: 1px solid rgba(201,123,95,.4);
+  background: rgba(201,123,95,.08);
+  color: var(--texto);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.tracking-result {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--linha);
+}
+
+.tracking-result-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tracking-result-top div {
+  display: grid;
+  gap: 3px;
+}
+
+.tracking-result-top small {
+  color: var(--texto-fraco);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tracking-result-top strong {
+  font-family: var(--font-stamp);
+  letter-spacing: 1px;
+}
+
+.tracking-result-top svg {
+  color: var(--azul);
+}
+
+.tracking-status-label {
+  color: var(--azul);
+  font-weight: 700;
+  margin: 18px 0;
+}
+
+.tracking-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.tracking-steps div {
+  text-align: center;
+  color: var(--texto-fraco);
+  opacity: .55;
+}
+
+.tracking-steps div.ativo {
+  opacity: 1;
+  color: var(--azul);
+}
+
+.tracking-steps span {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 6px;
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 11px;
+}
+
+.tracking-steps small {
+  display: block;
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+@media (max-width: 900px) {
+  .delivery-grid,
+  .how-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tracking-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .delivery-head,
+  .section-heading-inline {
+    display: block;
+  }
+
+  .delivery-head > p,
+  .section-heading-inline > span {
+    margin-top: 15px;
+  }
+
+  .delivery-grid,
+  .how-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tracking-card {
+    padding: 18px;
+  }
+
+  .tracking-card form {
+    grid-template-columns: 1fr;
+  }
+
+  .tracking-steps small {
+    font-size: 8px;
+  }
+
+  .low-stock-section .section-heading-inline > span {
+    text-align: left;
+  }
+}
