@@ -15,11 +15,12 @@ import Checkout from "./components/Checkout";
 import CTA from "./components/CTA";
 import Mapa from "./components/Mapa";
 import Footer from "./components/Footer";
+import Delivery from "./components/Delivery";
+import RastrearPedido from "./components/RastrearPedido";
+import ComoComprar from "./components/ComoComprar";
+import UltimasUnidades from "./components/UltimasUnidades";
 
-import {
-  CATEGORIAS,
-  LOJA,
-} from "./config/loja";
+import { CATEGORIAS } from "./config/loja";
 
 import { PRODUTOS } from "./data/produtos";
 
@@ -531,18 +532,18 @@ export default function App() {
 
       <Destaques
         produtos={destaques}
-        tamanhosSelecionados={
-          tamanhosSelecionados
-        }
-        selecionarTamanho={
-          selecionarTamanho
-        }
-        adicionarAoCarrinho={
-          adicionarAoCarrinho
-        }
-        quantidadeDoProdutoNoCarrinho={
-          quantidadeDoProdutoNoCarrinho
-        }
+        tamanhosSelecionados={tamanhosSelecionados}
+        selecionarTamanho={selecionarTamanho}
+        adicionarAoCarrinho={adicionarAoCarrinho}
+        quantidadeDoProdutoNoCarrinho={quantidadeDoProdutoNoCarrinho}
+      />
+
+      <UltimasUnidades
+        produtos={produtos}
+        tamanhosSelecionados={tamanhosSelecionados}
+        selecionarTamanho={selecionarTamanho}
+        adicionarAoCarrinho={adicionarAoCarrinho}
+        quantidadeDoProdutoNoCarrinho={quantidadeDoProdutoNoCarrinho}
       />
 
       {/* ====================================================
@@ -568,6 +569,12 @@ export default function App() {
           quantidadeDoProdutoNoCarrinho
         }
       />
+
+      <Delivery />
+
+      <ComoComprar />
+
+      <RastrearPedido />
 
       {/* ====================================================
           CTA
