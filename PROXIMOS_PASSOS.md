@@ -1,35 +1,24 @@
-# Próximas etapas — Mission Store
+# Próximos passos — Mission Store
 
-## Implementado nesta V3 (Payment Brick)
+## Já feito no código
 
-- [x] Painel administrativo protegido por token.
-- [x] CRUD de produtos.
-- [x] Estoque por tamanho.
-- [x] Tabela de pedidos e itens.
-- [x] Checkout com dados do cliente.
-- [x] Pagamento embutido via Payment Brick (`@mercadopago/sdk-react`), PIX e cartão.
-- [x] `netlify/functions/process-payment.mjs` recalculando o valor no backend antes de processar.
-- [x] Webhook de pagamento com validação de assinatura (mantido da V2).
-- [x] Baixa de estoque somente após pagamento aprovado, guardada por `estoque_processado`.
-- [x] Idempotência explícita (`estoque_processado`) para evitar baixa duplicada.
-- [x] Status e método de pagamento no painel administrativo.
-- [x] Removido o endpoint público `/api/pedidos-lista` (expunha dados de clientes sem login).
+- [x] Painel admin protegido (token assinado, bloqueio após 5 tentativas).
+- [x] CRUD de produtos e estoque por tamanho.
+- [x] Pedidos, itens e checkout com dados do cliente.
+- [x] PIX/cartão via Payment Brick, valor sempre recalculado no servidor.
+- [x] Token por pedido: só quem criou o pedido consegue pagá-lo.
+- [x] Webhook com assinatura, idempotente e atômico (notificação duplicada
+      não baixa estoque duas vezes).
+- [x] Estorno automático opcional quando pago sem estoque.
+- [x] Migrations na pasta certa (`netlify/database/migrations`).
 
-## Configuração necessária antes da produção
+## Falta você fazer
 
-- [ ] Definir `MERCADOPAGO_ACCESS_TOKEN` na Netlify.
-- [ ] Definir `VITE_MERCADOPAGO_PUBLIC_KEY` na Netlify (e em `.env` local).
-- [ ] Definir `MERCADOPAGO_WEBHOOK_SECRET` na Netlify.
-- [ ] Definir `SITE_URL` na Netlify.
-- [ ] Rodar `npm install` para baixar `@mercadopago/sdk-react`.
-- [ ] Rodar as migrations 001 a 005 em ordem.
-- [ ] Configurar Webhook do Mercado Pago para `/api/pagamento-webhook`.
-- [ ] Testar os 7 cenários descritos em `MERCADO_PAGO.md` com credenciais de teste.
-- [ ] Depois dos testes, trocar para credenciais de produção.
-- [ ] Conferir imagens reais dos produtos.
-
-## Fluxo definitivo
-
-Cliente -> checkout -> pedido pendente -> Payment Brick (PIX/cartão) -> Mercado Pago -> webhook aprovado -> baixa do estoque -> pedido confirmado.
-
-Veja `MERCADO_PAGO.md` para os detalhes completos da integração.
+- [ ] Colocar as fotos reais em `public/imagens/produtos/` (nomes no README).
+- [ ] Rodar `npm install` e `npm run build` e conferir que passa.
+- [ ] Conectar ao Netlify, provisionar o banco e cadastrar as variáveis.
+- [ ] Configurar o webhook no Mercado Pago.
+- [ ] Testar os cenários de `MERCADO_PAGO.md` com credenciais de teste.
+- [ ] Trocar para credenciais de produção.
+- [ ] Definir o frete (hoje fixo em R$ 0 no servidor, em `pedidos.mjs`).
+- [ ] Trocar o link do Instagram em `src/config/loja.js` (hoje é genérico).

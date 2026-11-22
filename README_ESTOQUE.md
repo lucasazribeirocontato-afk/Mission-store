@@ -36,4 +36,4 @@ Se M for vendido 1 vez:
 - P/G/GG permanecem iguais.
 
 ## Observação
-Não foi possível concluir `npm run build` neste ambiente porque a instalação das dependências ficou pendurada/expirou. As três Netlify Functions alteradas passaram na verificação de sintaxe do Node.
+As migrations ficam em `netlify/database/migrations/` (veja o `README.md`).

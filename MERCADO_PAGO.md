@@ -1,8 +1,7 @@
 # Mission Store — Pagamento com Payment Brick (PIX e cartão)
 
-Esta é a documentação atual da integração de pagamento. O arquivo
-`PAGAMENTO_MERCADOPAGO.md` descrevia a versão anterior (Checkout Pro) e
-foi mantido só como histórico.
+Esta é a documentação atual da integração de pagamento. A versão anterior
+(Checkout Pro) foi removida do projeto.
 
 ## Por que Payment Brick, e não Checkout Pro
 
@@ -19,7 +18,9 @@ Mercado Pago para concluir o pagamento.
 | `MERCADOPAGO_WEBHOOK_SECRET` | Validação da assinatura do webhook | Sim |
 | `VITE_MERCADOPAGO_PUBLIC_KEY` | Frontend, para inicializar o SDK React | Não — é pública por natureza |
 | `SITE_URL` | Montar a `notification_url` do pagamento | Não |
-| `ADMIN_SECRET` (ou `ADMIN_PASSWORD`) | Login do painel administrativo | Sim |
+| `ADMIN_PASSWORD` | Login do painel administrativo | Sim |
+| `ADMIN_SECRET` | Assinatura do token do admin (use um valor diferente da senha) | Sim |
+| `ESTORNO_AUTOMATICO` | Opcional. Com `true`, estorna sozinho se o cliente pagar e o estoque acabar | Não |
 
 A Public Key nunca autoriza cobranças sozinha — ela só permite montar o
 formulário do Brick no navegador. Quem processa o pagamento de fato é o
@@ -29,11 +30,13 @@ backend, com o Access Token.
 
 1. Cliente monta o carrinho e vai para o checkout.
 2. `POST /api/pedidos` cria o pedido com `status = pendente` e
-   `pagamento_status = pendente`. Nenhum estoque é baixado aqui.
+   `pagamento_status = pendente`. Nenhum estoque é baixado aqui. A resposta
+   inclui um `token` aleatório do pedido, que só o criador recebe.
 3. O componente `<Payment />` (Payment Brick) é renderizado com o total
    do pedido, só para exibição — quem manda no valor real é o backend.
 4. Ao enviar o formulário, o Brick chama `onSubmit`, que envia os dados
-   (`formData`) para `POST /api/process-payment`.
+   (`formData`) e o `token_pedido` para `POST /api/process-payment`. Sem o
+   token correto, o backend responde 404 (impede mexer em pedidos alheios).
 5. `process-payment.mjs` busca o pedido no PostgreSQL, usa o `total`
    armazenado no banco (nunca o valor vindo do navegador) e chama
    `POST https://api.mercadopago.com/v1/payments` com o Access Token.
@@ -43,10 +46,14 @@ backend, com o Access Token.
 7. O Mercado Pago também chama `POST /api/pagamento-webhook` de forma
    assíncrona (às vezes mais de uma vez). É o webhook — não a resposta
    do passo 5 — que consulta o pagamento novamente na API do Mercado
-   Pago e, só se `approved`, baixa o estoque por tamanho de forma
-   transacional e marca `estoque_processado = TRUE`.
-8. Se o pedido já tiver `estoque_processado = TRUE`, o webhook ignora
-   notificações repetidas (idempotência).
+   Pago e, só se `approved`, "reivindica" o pedido com um `UPDATE ... WHERE
+   estoque_processado = FALSE RETURNING id` (atômico) e então baixa o estoque
+   por tamanho. Se duas notificações chegarem juntas, só uma ganha.
+8. Quem não ganhar a reivindicação, ou chegar depois, recebe
+   `already_processed` e não mexe no estoque (idempotência).
+9. Se o pagamento foi aprovado mas o estoque acabou, o que já foi baixado é
+   devolvido, o pedido vira `estoque_indisponivel` e, com
+   `ESTORNO_AUTOMATICO=true`, o pagamento é estornado.
 
 ## PIX e cartão
 
@@ -76,6 +83,10 @@ texto puro — o SDK tokeniza o cartão no navegador antes de enviar.
    - Produto sem tamanho (Ecobag, "Único") → baixa corretamente.
    - Dois tamanhos diferentes no mesmo pedido → cada um baixa
      separadamente.
+   - Pagar o pedido sem `token_pedido` (ou com token errado) → 404.
+   - Aprovar um pedido cujo estoque acabou antes → `estoque_indisponivel`,
+     estoque intacto (e estorno, se `ESTORNO_AUTOMATICO=true`).
+   - 5 senhas erradas no `/admin` → bloqueio de 15 minutos (429).
 
 ## Trocar para produção
 

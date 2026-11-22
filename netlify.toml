@@ -14,3 +14,19 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Cabeçalhos de segurança básicos (não incluem CSP de propósito: o SDK do
+# Mercado Pago carrega scripts e iframes de vários domínios dele).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Assets do build têm hash no nome: cache longo é seguro.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
