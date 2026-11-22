@@ -37,13 +37,13 @@ function Hero({ irParaProdutos, produtos = [] }) {
 
           {destaqueA && (
             <div className="hero-produto hero-produto-a">
-              <img src={destaqueA} alt="" />
+              <img src={destaqueA} alt="" onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} />
             </div>
           )}
 
           {destaqueB && (
             <div className="hero-produto hero-produto-b">
-              <img src={destaqueB} alt="" />
+              <img src={destaqueB} alt="" onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} />
             </div>
           )}
         </div>

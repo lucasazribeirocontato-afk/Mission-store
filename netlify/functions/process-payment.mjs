@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { getDatabase } from "@netlify/database";
 
 const db = getDatabase();
@@ -7,6 +8,15 @@ function resposta(status, dados) {
     status,
     headers: { "Content-Type": "application/json" },
   });
+}
+
+function hash(valor) {
+  return crypto.createHash("sha256").update(String(valor)).digest();
+}
+
+function tokenConfere(recebido, esperado) {
+  if (!recebido || !esperado) return false;
+  return crypto.timingSafeEqual(hash(recebido), hash(esperado));
 }
 
 export default async (req) => {
@@ -22,6 +32,7 @@ export default async (req) => {
   try {
     const body = await req.json();
     const pedidoId = Number(body.pedido_id);
+    const tokenPedido = typeof body.token_pedido === "string" ? body.token_pedido : "";
     const formData = body.formData;
 
     if (!Number.isInteger(pedidoId)) return resposta(400, { error: "Pedido inválido." });
@@ -35,11 +46,21 @@ export default async (req) => {
     // banco) e usamos o total dali — nunca o que vier do Brick.
     // ------------------------------------------------------------------
     const rows = await db.sql`
-      SELECT id, codigo, nome_cliente, email, telefone, total, pagamento_status
+      SELECT id, codigo, nome_cliente, email, telefone, total, status,
+             pagamento_status, token_pagamento
       FROM pedidos WHERE id = ${pedidoId} LIMIT 1
     `;
     const pedido = rows[0];
-    if (!pedido) return resposta(404, { error: "Pedido não encontrado." });
+
+    // Mesma resposta para "não existe" e "token errado", para não permitir
+    // descobrir quais IDs de pedido existem.
+    if (!pedido || !tokenConfere(tokenPedido, pedido.token_pagamento)) {
+      return resposta(404, { error: "Pedido não encontrado." });
+    }
+
+    if (pedido.status === "estoque_indisponivel") {
+      return resposta(409, { error: "Este pedido não pode mais ser pago. Entre em contato com a loja." });
+    }
 
     if (pedido.pagamento_status === "aprovado") {
       return resposta(409, { error: "Este pedido já foi pago." });

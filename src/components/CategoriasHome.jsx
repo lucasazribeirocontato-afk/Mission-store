@@ -31,7 +31,7 @@ function CategoriasHome({ produtos = [], selecionarCategoria }) {
                 className="categoria-home-card"
                 onClick={() => selecionarCategoria(categoria.nome)}
               >
-                {imagem && <img src={imagem} alt="" />}
+                {imagem && <img src={imagem} alt="" onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} />}
                 <span className="categoria-home-overlay" />
                 <span className="categoria-home-content">
                   <strong>{categoria.label}</strong>

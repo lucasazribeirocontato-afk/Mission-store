@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const LIMITE_ESTOQUE_BAIXO = 3;
 
 function estoqueDoTamanho(produto, tamanho) {
@@ -13,6 +15,7 @@ function CardProduto({
   onAdicionar,
   quantidadeJaNoCarrinho,
 }) {
+  const [imagemFalhou, setImagemFalhou] = useState(false);
   const estoqueTotal = Number(produto.estoque) || 0;
   const esgotado = estoqueTotal <= 0;
   const precisaEscolherTamanho = produto.tamanhos.length > 1;
@@ -38,7 +41,7 @@ function CardProduto({
   return (
     <article className="produto-card">
       <div className="produto-imagem">
-        {produto.imagem ? <img src={produto.imagem} alt={produto.nome} loading="lazy" /> : <div className="produto-imagem-placeholder"><span>✦</span>FOTO DO PRODUTO</div>}
+        {produto.imagem && !imagemFalhou ? <img src={produto.imagem} alt={produto.nome} loading="lazy" onError={() => setImagemFalhou(true)} /> : <div className="produto-imagem-placeholder"><span>✦</span>FOTO DO PRODUTO</div>}
         {produto.novo && !esgotado && <span className="produto-badge selo">NOVO</span>}
         {esgotado && <span className="produto-badge selo esgotado">ESGOTADO</span>}
       </div>

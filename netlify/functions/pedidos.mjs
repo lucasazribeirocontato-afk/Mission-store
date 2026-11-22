@@ -25,6 +25,7 @@ export default async (req) => {
     const itens = body.itens;
 
     if (!nome_cliente || !telefone) return resposta(400, { error: "Nome e telefone são obrigatórios." });
+    if (telefone.replace(/\D/g, "").length < 10) return resposta(400, { error: "WhatsApp inválido. Informe com DDD." });
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return resposta(400, { error: "E-mail inválido." });
     if (!Array.isArray(itens) || !itens.length || itens.length > 100) return resposta(400, { error: "Pedido inválido." });
 
@@ -80,33 +81,42 @@ export default async (req) => {
     const total = subtotal + valorFrete;
     const codigo = `MS-${Date.now().toString(36).toUpperCase()}-${crypto.randomUUID().slice(0, 6).toUpperCase()}`;
 
+    // Token que só o criador do pedido recebe. É exigido em /api/process-payment.
+    const tokenPedido = crypto.randomBytes(24).toString("hex");
+
     const pedidos = await db.sql`
       INSERT INTO pedidos (
         codigo, nome_cliente, email, telefone, subtotal, frete, total,
-        pagamento, status, observacoes
+        pagamento, status, observacoes, token_pagamento
       )
       VALUES (
         ${codigo}, ${nome_cliente}, ${email || null}, ${telefone},
         ${subtotal}, ${valorFrete}, ${total},
-        'pendente', 'pendente', ${observacoes || null}
+        'pendente', 'pendente', ${observacoes || null}, ${tokenPedido}
       )
       RETURNING id, codigo, subtotal, frete, total, pagamento, status, criado_em
     `;
     const pedido = pedidos[0];
 
-    for (const item of itensProcessados) {
-      await db.sql`
-        INSERT INTO itens_pedido (
-          pedido_id, produto_id, produto_nome, tamanho, quantidade, preco
-        )
-        VALUES (
-          ${pedido.id}, ${item.produtoId}, ${item.nome},
-          ${item.tamanho}, ${item.quantidade}, ${item.preco}
-        )
-      `;
+    try {
+      for (const item of itensProcessados) {
+        await db.sql`
+          INSERT INTO itens_pedido (
+            pedido_id, produto_id, produto_nome, tamanho, quantidade, preco
+          )
+          VALUES (
+            ${pedido.id}, ${item.produtoId}, ${item.nome},
+            ${item.tamanho}, ${item.quantidade}, ${item.preco}
+          )
+        `;
+      }
+    } catch (erroItens) {
+      // Não deixa um pedido "vazio" no banco (itens_pedido apaga em cascata).
+      await db.sql`DELETE FROM pedidos WHERE id = ${pedido.id}`.catch(() => {});
+      throw erroItens;
     }
 
-    return resposta(201, { pedido });
+    return resposta(201, { pedido: { ...pedido, token: tokenPedido } });
   } catch (error) {
     console.error("Erro ao criar pedido:", error);
     return resposta(500, { error: "Não foi possível criar o pedido." });

@@ -40,6 +40,7 @@ function PagamentoBrick({ pedido, onResultado, onErro }) {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           pedido_id: pedido.id,
+          token_pedido: pedido.token,
           formData,
         }),
       });

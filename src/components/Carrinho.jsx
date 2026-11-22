@@ -66,7 +66,7 @@ function Carrinho({
                   >
                     <div className="carrinho-foto">
                       {item.imagem ? (
-                        <img src={item.imagem} alt={item.nome} />
+                        <img src={item.imagem} alt={item.nome} onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} />
                       ) : (
                         <span>FOTO</span>
                       )}
